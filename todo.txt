@@ -1,0 +1,98 @@
+#
+# To Do List for showPrimes.py
+#
+
+-> Pull from these fixes/features those that should be in 
+   the first deployed version [marked with "+"]
+
+Fixes:
+
+	+ Fix gap counting: e.g. in the range 78-80, there is one
+	  prime: 79. We say that 79 is a twin prime because when we
+	  get to it, our gap size variable is equal to one. We need 
+	  to not start accumulating the gap size value until we hit
+	  the first prime in the range.
+
+	+ Don't show gap stats in table title when # primes in range is 0 or 1
+
+Refactor/Improve:
+
+	- ?Use st tables instead of html tables?
+
+	- Replace existing prime/composite generation code:
+	  . Write one function: given a range, returns a list
+	  . the list is a compressed version of the primes and 
+	    composites in that range.
+	  . e.g. given 15 to 20, the result is
+	    15, 16, 17p, 18, 19p, 20
+	    and this might be returned as:
+	    [2, -17, 1, -19, 1]
+	  . Then the code that called this new function would
+	    use the result to format & display a table or a plot.
+
+New Features:
+
+	- Add option to download tables as PDFs
+
+	- Center the "download plot" button
+
+	- Add title to whole page
+
+	- ? Add "info" popup window or maybe an about-this-page page?
+
+	- Add an option to show table/plot of gaps between twin prime pairs
+
+	- Add an option to show table/plot of frequency of gap sizes
+
+	- Add an option to show occurances of gap size plateaus
+	  (for primes or for twin prime pairs) e.g. bar chart showing 
+	  number of width n plateaus for all n sized plateaus that 
+	  occur in the given range
+
+	- Add an option to show stats for a series of ranges.
+	  e.g. avg gap from 1-100,000 in steps of 1,000 or
+	  % of primes in ranges of 100 from 1 to 100,000
+
+-------------------------------------------------------
+  D O N E
+-------------------------------------------------------
+
+√ Don't display a plot of gaps when # primes in range is 0 or 1,
+  display a modal message instead.
+
+√  Handle case where there are no primes, or only one
+  √ plot of gaps: show msg: 
+  	1. √ There is only 1 prime in the range a-b, so no prime gaps to plot
+  	2. √ There are no primes in the range a-b, so no prime gaps to plot
+  √ table:
+    1. √ Don't show gap count if only one prime in the range
+    2. √ If only 1 prime, say "prime" not "primes"
+    3. √ If only 1 prime (and at least 1 twin pair), fix commas and spaces in title
+
+√+ Fix submit button, when range value(s) have changed, need 
+  to click the button twice.
+
+√+ Don't show negative numbers in submit button
+
+√+ Try making primes blue, twin prime pairs bold (or italic) blue
+
+√- Eliminate comma_format function
+
+√+ Cleanup table title
+
+√+ Add title to plot
+
+x Move submit button into the sidebar
+
+x Validate inputs
+	x Numbers must be integers
+	x b > a
+
+x Rename variables: separations -> gaps
+
+x Move controls to left side panel
+
+x Eliminate columns for controls
+
+x Clean up title on tables
+
