@@ -38,6 +38,11 @@ def plot_dialog(a, b, num_primes):
 #---------------------------------------------------------------
 
 #----------------------------------------------------------------
+# primes_to_plot
+#
+# Generate and display a plot showing the size of gaps between
+# consecutive prime numbers.
+#
 def primes_to_plot(params):
 
     a = params[0]
