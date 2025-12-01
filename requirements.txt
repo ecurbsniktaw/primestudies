@@ -1,6 +1,5 @@
 streamlit
 matplotlib
 numpy
-math
 io
 os
