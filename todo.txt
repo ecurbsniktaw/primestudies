@@ -7,6 +7,13 @@
 
 Fixes:
 
+	√+ Fix how gaps are calculated. Mathematicians define the gap 
+	  between two consecutive primes as the difference between 
+	  them. So 2, 3, 5, 7, 11 gives us gaps of 1, 2, 2, 4. But
+	  we are showing those gaps as 0, 1, 1, 3. We are showing
+	  the number of integers between the primes, not the size
+	  of the gap.
+
 	+ Fix gap counting: e.g. in the range 78-80, there is one
 	  prime: 79. We say that 79 is a twin prime because when we
 	  get to it, our gap size variable is equal to one. We need 

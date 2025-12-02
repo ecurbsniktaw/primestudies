@@ -48,7 +48,7 @@ def primes_to_plot(params):
     a = params[0]
     b = params[1]
 
-    gap      = 0
+    gap      = 1
     max_gap  = 0
     n_primes = 0
     n_twins  = 0
@@ -67,11 +67,11 @@ def primes_to_plot(params):
             gaps.append(gap)
             ndxs.append(n_primes)
 
-            if gap == 1:
+            if gap == 2:
                 n_twins = n_twins + 1
             if gap > max_gap:
                 max_gap = gap
-            gap = 0
+            gap = 1
 
         else:
             gap = gap + 1
@@ -84,6 +84,7 @@ def primes_to_plot(params):
     #
     if n_primes <= 1:
         plot_dialog(a, b, n_primes)
+
     else:
         if len(gaps) > 0:
             avg_gap = round(sum(gaps)/len(gaps), 2)
@@ -152,7 +153,7 @@ def primes_to_html(params):
     # being generated.
     row      = []
 
-    gap      = 0
+    gap      = 1
     max_gap  = 0
     n_primes = 0
     n_twins  = 0
@@ -189,13 +190,13 @@ def primes_to_html(params):
             if (gap > max_gap) & (n_primes > 0):
                 max_gap = gap
 
-            if gap == 1:
+            if gap == 2:
                 n_twins = n_twins + 1
                 css_class = "twin"
 
             was_gap = gap
             gaps.append(was_gap)
-            gap = 0
+            gap = 1
 
         else:
             css_class = ""
