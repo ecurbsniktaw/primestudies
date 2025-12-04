@@ -49,7 +49,7 @@ def primes_to_plot(params):
     b = params[1]
 
     gap      = 1
-    max_gap  = 0
+    max_gap  = 1
     n_primes = 0
     n_twins  = 0
 
@@ -139,8 +139,8 @@ def primes_to_html(params):
         "<style>",
         "table { border-collapse: collapse; font-family: Arial; font-size: 14pt; }",
         "td { width: 50px; height: 30px; text-align: right; padding: 4px; }",
-        ".prime { color: blue; font-weight: bold; }",
-        ".twin { color: blue; font-style: italic; font-weight: bold}",
+        ".prime { color: blue; font-weight: normal; }",
+        ".twin { color: blue; font-style: italic; font-weight: normal}",
         "h5,h4,h3 {margin: 0; padding: 0;}",
         "</style>",
         "</head>",
@@ -154,7 +154,7 @@ def primes_to_html(params):
     row      = []
 
     gap      = 1
-    max_gap  = 0
+    max_gap  = 1
     n_primes = 0
     n_twins  = 0
 
@@ -171,6 +171,7 @@ def primes_to_html(params):
         if is_prime(n):
 
             n_primes = n_primes+1
+            found_prime = True
 
             # If the previous prime was the first of a twin
             # prime pair, then this one is the second of that pair.
@@ -200,7 +201,8 @@ def primes_to_html(params):
 
         else:
             css_class = ""
-            gap = gap + 1
+            if found_prime:
+                gap = gap + 1
 
         if which == 1: # showing all values in the range
             row.append(f"<td class='{css_class}'>{n:,}</td>")
