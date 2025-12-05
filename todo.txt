@@ -1,13 +1,8 @@
 #
-# To Do List for showPrimes.py
+# To Do List for main.py in the primestudies repository
 #
 
--> Pull from these fixes/features those that should be in 
-   the first deployed version [marked with "+"]
-
 Fixes:
-
-	+ Don't show gap stats in table title when # primes in range is 0 or 1
 
 Refactor/Improve:
 
@@ -50,6 +45,9 @@ New Features:
 -------------------------------------------------------
   D O N E
 -------------------------------------------------------
+
+	√+ Don't show gap stats in table title when # primes in range is 0 or 1,
+	  and remove comma after 'n twin prime pairs' if not showing gap stats
 
 	√+ Fix how gaps are calculated. Mathematicians define the gap 
 	  between two consecutive primes as the difference between 

@@ -238,14 +238,16 @@ def primes_to_html(params):
     if n_primes > 1:
         gap_stat_txt  = f" avg {avg_gap:,}, ln({b:,})={log_b:,}"
         gap_stat_max  = f" Gaps: max {max_gap:,} "
+        showing_gap_stats = True
     else:
         gap_stat_txt = ""
         gap_stat_max = ""
+        showing_gap_stats = False
 
     html_heading = [
         f"<center><h5>{a:,} - {b:,}: primes in blue, twin primes in italics<br>",
         f"{n_primes:,} prime{'s' if n_primes!=1 else ''},",
-        f"{n_twins:,} twin prime pair{'s,' if n_twins!=1 else ','}",
+        f"{n_twins:,} twin prime pair{'s' if n_twins!=1 else ''}{', ' if showing_gap_stats else ''}",
         gap_stat_max,
         gap_stat_txt,
         "</h5><center><table>"
