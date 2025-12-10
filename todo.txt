@@ -6,7 +6,11 @@ Fixes:
 
 Refactor/Improve:
 
-	- ?Use st tables instead of html tables?
+	- Move 'download plot' button to the sidebar, but only show the
+	  button when a plot is visible.
+
+	- Write a function that generalizes the creation of an html table 
+	  from python lists(?)
 
 	- Replace existing prime/composite generation code:
 	  . Write one function: given a range, returns a list
@@ -21,13 +25,17 @@ Refactor/Improve:
 
 New Features:
 
-	- Add option to download tables as PDFs
+	- Add factors output:
+		x Radio button: Table: prime factors
+		- Radio button: Plot: # factors
 
-	- Center the "download plot" button
+	- Add option to download tables as PDFs.
+	  Looks like weasyprint is the way to go:
+	  https://weasyprint.org
 
 	- Add title to whole page
 
-	- ? Add "info" popup window or maybe an about-this-page page?
+	- Write the about page
 
 	- Add an option to show table/plot of gaps between twin prime pairs
 
@@ -45,6 +53,11 @@ New Features:
 -------------------------------------------------------
   D O N E
 -------------------------------------------------------
+
+	√- Use local import: Extract the prime-related functions and
+	  put them into a separate .py file. Then import that local
+	  file from main.py and change the main.py code to call those
+	  functions.
 
 	√+ Don't show gap stats in table title when # primes in range is 0 or 1,
 	  and remove comma after 'n twin prime pairs' if not showing gap stats
@@ -87,17 +100,17 @@ New Features:
 
 √+ Add title to plot
 
-x Move submit button into the sidebar
+√- Move submit button into the sidebar
 
-x Validate inputs
+√- Validate inputs
 	x Numbers must be integers
 	x b > a
 
-x Rename variables: separations -> gaps
+√- Rename variables: separations -> gaps
 
-x Move controls to left side panel
+√- Move controls to left side panel
 
-x Eliminate columns for controls
+√- Eliminate columns for controls
 
-x Clean up title on tables
+√- Clean up title on tables
 

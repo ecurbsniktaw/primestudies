@@ -5,27 +5,9 @@ import math
 import io
 import os
 from   matplotlib.backends.backend_pdf import PdfPages
+import pandas as pd
 
-#----------------------------------------------------------------
-# is_prime
-#	Given an integer n, return True if n is prime, else False.
-#
-def is_prime(n):
-    if n < 2:
-        return False
-    if n in (2, 3):
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-        i += 6
-    return True
-
-# end: is_prime
-#----------------------------------------------------------------
+import primefunctions as pf
 
 @st.dialog("No Gaps to Plot", width="medium")
 def plot_dialog(a, b, num_primes):
@@ -62,7 +44,7 @@ def primes_to_plot(params):
     # Also determine maximum gap.
     for n in range(a, b + 1):
 
-        if is_prime(n):
+        if pf.is_prime(n):
             n_primes = n_primes+1
             gaps.append(gap)
             ndxs.append(n_primes)
@@ -140,7 +122,7 @@ def primes_to_html(params):
         "table { border-collapse: collapse; font-family: Arial; font-size: 14pt; }",
         "td { width: 50px; height: 30px; text-align: right; padding: 4px; }",
         ".prime { color: blue; font-weight: normal; }",
-        ".twin { color: blue; font-style: italic; font-weight: normal}",
+        ".twin { color: blue; text-decoration: underline;}",
         "h5,h4,h3 {margin: 0; padding: 0;}",
         "</style>",
         "</head>",
@@ -168,7 +150,7 @@ def primes_to_html(params):
     # and building rows for the output html table.
     for n in range(a, b + 1):
 
-        if is_prime(n):
+        if pf.is_prime(n):
 
             n_primes = n_primes+1
             found_prime = True
@@ -182,7 +164,7 @@ def primes_to_html(params):
             # This N is a prime, so if N+2 is also prime, then N
             # is the first member of a twin prime pair.
             ###### DO WE WANT TO CONFIRM THAT N+2 IS IN THE RANGE(?)
-            if is_prime(n+2):
+            if pf.is_prime(n+2):
                 css_class = "twin"
                 was_twin   = True
             else:
@@ -245,7 +227,7 @@ def primes_to_html(params):
         showing_gap_stats = False
 
     html_heading = [
-        f"<center><h5>{a:,} - {b:,}: primes in blue, twin primes in italics<br>",
+        f"<center><h5>{a:,} - {b:,}: primes in blue, twin primes underlined<br>",
         f"{n_primes:,} prime{'s' if n_primes!=1 else ''},",
         f"{n_twins:,} twin prime pair{'s' if n_twins!=1 else ''}{', ' if showing_gap_stats else ''}",
         gap_stat_max,
@@ -311,7 +293,9 @@ with st.sidebar:
         " ",
         ["Table: all numbers", 
         "Table: primes & gaps",
-        "Plot: gaps"],
+        "Plot: gaps",
+        "Table: prime factors",
+        "Plot: # factors"],
         key="my_setting_radio",
         on_change=update_display,
         args=("my_setting_radio",),
@@ -329,7 +313,7 @@ with st.sidebar:
     if type_display != "Plot: gaps":
         cols = st.number_input("Num columns:", min_value=1, value=10, step=1, width=100)
 
-# End of sidebat
+# End of sidebar
 #---------------------------------------------------------------
 
 @st.dialog("Invalid Input", width="medium")
@@ -344,13 +328,17 @@ def my_dialog(a, b, are_equal):
 #---------------------------------------------------------------
 
 # Determine which type of display the user has chosen.
-if type_display == "Table: all numbers":
-    which = 1
-else:
-    if type_display == "Table: primes & gaps":
+match type_display:
+    case 'Table: all numbers':
+        which = 1
+    case "Table: primes & gaps":
         which = 2
-    else:
+    case "Plot: gaps":
         which = 3
+    case "Table: prime factors":
+        which = 4
+    case "Plot: # factors":
+        which = 5
 
 if 'display_text' not in st.session_state:
     st.session_state.display_text = "No option selected yet."
@@ -364,20 +352,32 @@ if b <= a:
 # Additional sidebar content
 with st.sidebar:
 
-    ok_to_table = False
-    ok_to_plot  = False
+    ok_to_table      = False
+    ok_to_plot       = False
+    ok_to_table_facs = False
+    ok_to_plot_facs  = False
     if st.button("Submit") & no_errors:
-        if type_display != "Plot: gaps":
+        if which == 1 or which == 2:
             ok_to_table = True
-        else:
+        elif which == 3:
             ok_to_plot = True
+        elif which == 4:
+            ok_to_table_facs = True
+        elif which == 5:
+            ok_to_plot_facs = True
 
-# End of sidebat
+# End of sidebar
 #---------------------------------------------------------------
 
 if ok_to_table:
     primes_to_html([a, b, cols, which])
-else:
-    if ok_to_plot:
-        primes_to_plot([a, b])
+elif ok_to_plot:
+    primes_to_plot([a, b])
+elif ok_to_table_facs:
+    df = pf.df_factors(a, b, small=False)
+    html_facs = df.to_html(index=False)
+    st.markdown(html_facs, unsafe_allow_html=True)
+    # st.write(df)
+elif ok_to_plot_facs:
+    st.write("will show plot of factors")
 
